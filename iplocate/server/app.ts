@@ -22,16 +22,6 @@ async function initializeTemporal() {
   temporalClient = new Client({ connection });
 }
 
-// Start the Temporal Workflow
-async function startWorkflow(input: WorkflowInput): Promise<WorkflowOutput> {
-  const result = await temporalClient.workflow.execute(getAddressFromIP, {
-    taskQueue: TASK_QUEUE_NAME,
-    args: [input],
-    workflowId: 'iplocate-' + nanoid(),
-  });
-  return result;
-}
-
 // Route to handle HTMX form submission
 app.post('/greet', async (req: Request, res: Response) => {
   try {
@@ -48,7 +38,11 @@ app.post('/greet', async (req: Request, res: Response) => {
       name,
       seconds
     };
-    const result = await startWorkflow(input);
+    const result = await temporalClient.workflow.execute(getAddressFromIP, {
+      taskQueue: TASK_QUEUE_NAME,
+      args: [input],
+      workflowId: 'iplocate-' + nanoid(),
+    });
     res.send(`<p>Hello, ${name}!<br> Your IP Address is <code>${result.ip}</code>.<br> You are in ${result.location}.</p>`);
   } catch (e) {
     res.send('<p>An error occurred</p>');
