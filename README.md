@@ -286,8 +286,7 @@ If a Timer fires and a Worker is not available, it will pick up when a Worker be
 10. Open the Web UI and show that the Workflow continued execution and everything looks normal, as if nothing ever happened.
 11. Explain to the audience:
     > "The Worker resumed execution as if nothing happened. The first Activity was not re-executed. The state of the application was reconstructed from the Event History, and the result that was returned from the successful execution of the Activity the first time was used. The first Activity was not re-executed."
-12. Ask the audience the following question:
-    > "Now lets say the Timer had been set to longer, for example, an hour, and we had recovered the Worker before it had fired, what would have happend?"
+> "Now lets say the Timer had been set to longer, for example, an hour, and we had recovered the Worker before it had fired, what would have happened?"
     **Answer:** The Timer would have fired and execution would have completed successfully, as if nothing had ever happened.
 13. Return to the web application and click the **Reset** button.
 
